@@ -1,0 +1,31 @@
+addon "svm" {
+    rpc_api_url = input.rpc_api_url
+    network_id = input.network_id
+}
+
+signer "payer" "svm::secret_key" {
+    description = "Pays fees for program deployments and operations"
+    keypair_json = "~/.config/solana/id.json"
+    // See documentation for other options (mnemonic, etc): https://docs.surfpool.run/iac/svm/signers
+}
+
+variable "kids_mint" {
+    description = "The public key of the kids_mint"
+    value = "4peG5vF6VXbUt8PPA5LDbtdeRAPBGGrspDMW3ot6TdeX"
+    editable = true
+}
+
+variable "init_kids_amount" {
+    description = "The amount of tokens in token account"
+    value = 1000000000 * 1000000
+    editable = true
+}
+
+action "setup_surfnet" "svm::setup_surfnet" {
+    set_token_account {
+        public_key = signer.payer.public_key
+        token = variable.kids_mint
+        amount = variable.init_kids_amount
+        token_program = "token2020"
+    }
+}
