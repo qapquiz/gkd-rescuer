@@ -27,3 +27,12 @@ npm install
 ```shell
 npm run dev
 ```
+
+### For local testing
+
+change the wallet public key inside `./runbooks/gkd-rescuer.tx`
+
+```shell
+surfpool start
+surfpool run ./runbooks/gkd-rescuer.tx <== run this to setup wallet with $KID tokens
+```
